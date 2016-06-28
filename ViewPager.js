@@ -1,18 +1,19 @@
 'use strict';
 
-var React = require('react-native');
-var {
+import React, {
+  Component,
+  PropTypes,
+} from 'react';
+import {
   Dimensions,
   View,
   PanResponder,
   Animated,
-  PropTypes,
   StyleSheet,
-  Component,
   ScrollView,
   ViewPagerAndroid,
   Platform
-} = React;
+} from 'react-native';
 
 var DefaultViewPageIndicator = require('./DefaultViewPageIndicator');
 var deviceWidth = Dimensions.get('window').width;
@@ -222,8 +223,9 @@ export default class ViewPager extends Component
       this.state.scrollValue.setValue(this.childIndex);
       this.setState({
         currentPage: nextCurPage,
+      }, ()=>{
+        moved && this.props.onChangePage && this.props.onChangePage(nextCurPage);
       });
-      moved && this.props.onChangePage && this.props.onChangePage(nextCurPage);
     }
     if (this.scrollViewIOS) {
       if (animated) {
